@@ -1061,28 +1061,10 @@ setInterval(autoSync, 60 * 1000);
 
 /* ===== handlers ===== */
 document.getElementById('btnGithubLogin').onclick = ()=>{
-  const client_id = prompt('Cole aqui o GitHub OAuth App client_id (apps.github.com):');
-  if(!client_id) return;
-  const state = Math.random().toString(36).slice(2);
-  localStorage.setItem('crm_gh_oauth_state', state);
-  const redirect = encodeURIComponent(location.origin + location.pathname);
-  const url = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(client_id)}&scope=repo&state=${state}&redirect_uri=${redirect}`;
-  const w = window.open(url, '_blank', 'width=600,height=700');
-  if(!w){ showToast('Popup bloqueado.'); return; }
-  const poll = setInterval(()=>{
-    try{
-      if(!w || w.closed){ clearInterval(poll); return; }
-      if(w.location.hostname === location.hostname){
-        const qs = new URLSearchParams(w.location.search);
-        if(qs.get('state') === state){
-          clearInterval(poll);
-          const code = qs.get('code');
-          if(code){ exchangeCode(code, client_id); }
-          w.close();
-        }
-      }
-    }catch(e){}
-  }, 800);
+  const token = prompt('Cole aqui o seu GitHub Personal Access Token (escopo repo):');
+  if(!token) return;
+  localStorage.setItem(LS_GH, token.trim());
+  githubWhoami();
 };
 document.getElementById('btnGithubLogout').onclick = ()=>{
   localStorage.removeItem(LS_GH);
