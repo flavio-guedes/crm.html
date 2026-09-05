@@ -2,11 +2,19 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=crm.html">
-<link rel="canonical" href="crm.html">
+<script>
+  const path = location.pathname.replace(/\/$/, "");
+  if (path.endsWith("crm.html")) {
+    location.replace(path);
+  } else {
+    location.replace("/crm.html");
+  }
+</script>
+<meta http-equiv="refresh" content="0; url=/crm.html">
+<link rel="canonical" href="/crm.html">
 <title>Redirecionando...</title>
 </head>
 <body>
-Abrindo o CRM... <a href="crm.html">clique aqui</a>.
+Abrindo o CRM... <a href="/crm.html">clique aqui</a>.
 </body>
 </html>
