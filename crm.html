@@ -202,7 +202,10 @@ select.status-sel{background:var(--panel2); border:1px solid var(--border); colo
     <button class="btn btn-primary" id="btnCopyAll">📋 Copiar todos os e-mails do banco (<span id="totalEmailsCount">0</span>)</button>
     <button class="btn btn-ghost" id="btnExport">⤓ Exportar status (backup)</button>
     <button class="btn btn-ghost" id="btnImport">⤒ Importar status</button>
+    <button class="btn btn-ghost" id="btnSaveAll">💾 Salvar tudo</button>
+    <button class="btn btn-ghost" id="btnLoadAll">📂 Carregar tudo</button>
     <input type="file" id="importFile" accept=".json" style="display:none">
+    <input type="file" id="loadFile" accept=".json" style="display:none">
   </div>
 
   <div class="section-title">Tiers</div>
@@ -838,6 +841,61 @@ document.getElementById('importFile').onchange = (e)=>{
     try{
       const data = JSON.parse(reader.result);
       if(data.status){ statusMap = data.status; localStorage.setItem(LS_STATUS, JSON.stringify(statusMap)); render(); showToast('Status importado com sucesso.'); }
+    }catch(err){ showToast('Arquivo inválido.'); }
+  };
+  reader.readAsText(file);
+};
+
+/* ===== salvar / carregar estado completo ===== */
+const LS_ALL = "crm_full_state_v1";
+document.getElementById('btnSaveAll').onclick = ()=>{
+  const payload = {
+    exportedAt: new Date().toISOString(),
+    prospeccao: {
+      statusMap,
+      selected: [...selected],
+      activeTier,
+      activeSubtipo,
+      searchTerm,
+      statusFilter,
+      prioFilter,
+      page
+    },
+    crm: {
+      crmMap,
+      crmSearchTerm
+    }
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `crm_estado_completo_${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Estado completo salvo.');
+};
+document.getElementById('btnLoadAll').onclick = ()=>document.getElementById('loadFile').click();
+document.getElementById('loadFile').onchange = (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const data = JSON.parse(reader.result);
+      let restored = 0;
+      const p = data.prospeccao || {};
+      if(p.statusMap){ statusMap = p.statusMap; localStorage.setItem(LS_STATUS, JSON.stringify(statusMap)); restored++; }
+      if(p.selected){ selected = new Set(p.selected); localStorage.setItem(LS_SEL, JSON.stringify([...selected])); restored++; }
+      if(p.activeTier !== undefined) activeTier = p.activeTier;
+      if(p.activeSubtipo !== undefined) activeSubtipo = p.activeSubtipo;
+      if(p.searchTerm !== undefined){ searchTerm = p.searchTerm; document.getElementById('searchInput').value = searchTerm; }
+      if(p.statusFilter !== undefined) statusFilter = p.statusFilter;
+      if(p.prioFilter !== undefined) prioFilter = p.prioFilter;
+      if(p.page !== undefined) page = p.page;
+      const c = data.crm || {};
+      if(c.crmMap){ crmMap = c.crmMap; localStorage.setItem(LS_CRM, JSON.stringify(crmMap)); restored++; }
+      if(c.crmSearchTerm !== undefined){ crmSearchTerm = c.crmSearchTerm; document.getElementById('crmSearch').value = crmSearchTerm; }
+      render();
+      renderCrmBoard();
+      showToast('Estado completo restaurado.');
     }catch(err){ showToast('Arquivo inválido.'); }
   };
   reader.readAsText(file);
