@@ -204,6 +204,9 @@ select.status-sel{background:var(--panel2); border:1px solid var(--border); colo
     <button class="btn btn-ghost" id="btnImport">⤒ Importar status</button>
     <button class="btn btn-ghost" id="btnSaveAll">💾 Salvar tudo</button>
     <button class="btn btn-ghost" id="btnLoadAll">📂 Carregar tudo</button>
+    <button class="btn btn-ghost btn-sm" id="btnGithubLogin">🔑 Login GitHub</button>
+    <button class="btn btn-ghost btn-sm" id="btnGithubLogout">Sair</button>
+    <span id="githubStatus" style="font-size:11px;color:var(--text-faint);">desconectado</span>
     <input type="file" id="importFile" accept=".json" style="display:none">
     <input type="file" id="loadFile" accept=".json" style="display:none">
   </div>
@@ -848,8 +851,66 @@ document.getElementById('importFile').onchange = (e)=>{
 
 /* ===== salvar / carregar estado completo ===== */
 const LS_ALL = "crm_full_state_v1";
+function saveFullState(){
+  const payload = buildFullPayload();
+  localStorage.setItem(LS_ALL, JSON.stringify(payload));
+}
+function loadFullState(){
+  const raw = localStorage.getItem(LS_ALL);
+  if(!raw) return;
+  try{
+    const data = JSON.parse(raw);
+    applyFullPayload(data);
+    showToast('Estado local restaurado.');
+  }catch(err){ showToast('Backup local inválido.'); }
+}
 document.getElementById('btnSaveAll').onclick = ()=>{
-  const payload = {
+  const payload = buildFullPayload();
+  localStorage.setItem(LS_ALL, JSON.stringify(payload));
+  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `crm_estado_completo_${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Estado completo salvo.');
+  if(localStorage.getItem(LS_GH)) githubSave();
+};
+document.getElementById('btnLoadAll').onclick = ()=>document.getElementById('loadFile').click();
+document.getElementById('loadFile').onchange = (e)=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const data = JSON.parse(reader.result);
+      applyFullPayload(data);
+      localStorage.setItem(LS_ALL, JSON.stringify(data));
+      showToast('Estado completo restaurado.');
+    }catch(err){ showToast('Arquivo inválido.'); }
+  };
+  reader.readAsText(file);
+};
+
+/* ===== GitHub sync ===== */
+const GH_REPO = "flavio-guedes/crm.html";
+const GH_PATH = "crm_estado.json";
+const LS_GH = "crm_github_token_v1";
+const LS_GH_USER = "crm_github_user_v1";
+const LS_GH_SYNC = "crm_last_sync_v1";
+
+function githubHeaders(extra){
+  const token = localStorage.getItem(LS_GH);
+  if(!token) return null;
+  const base = {
+    'Authorization': `Bearer ${token}`,
+    'Accept': 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json'
+  };
+  return {...base, ...extra};
+}
+function setGithubStatus(text){ document.getElementById('githubStatus').textContent = text; }
+function buildFullPayload(){
+  return {
     exportedAt: new Date().toISOString(),
     prospeccao: {
       statusMap,
@@ -866,40 +927,180 @@ document.getElementById('btnSaveAll').onclick = ()=>{
       crmSearchTerm
     }
   };
+}
+function applyFullPayload(data){
+  try{
+    const p = data.prospeccao || {};
+    if(p.statusMap){ statusMap = p.statusMap; localStorage.setItem(LS_STATUS, JSON.stringify(statusMap)); }
+    if(p.selected){ selected = new Set(p.selected); localStorage.setItem(LS_SEL, JSON.stringify([...selected])); }
+    if(p.activeTier !== undefined) activeTier = p.activeTier;
+    if(p.activeSubtipo !== undefined) activeSubtipo = p.activeSubtipo;
+    if(p.searchTerm !== undefined){ searchTerm = p.searchTerm; document.getElementById('searchInput').value = searchTerm; }
+    if(p.statusFilter !== undefined) statusFilter = p.statusFilter;
+    if(p.prioFilter !== undefined) prioFilter = p.prioFilter;
+    if(p.page !== undefined) page = p.page;
+    const c = data.crm || {};
+    if(c.crmMap){ crmMap = c.crmMap; localStorage.setItem(LS_CRM, JSON.stringify(crmMap)); }
+    if(c.crmSearchTerm !== undefined){ crmSearchTerm = c.crmSearchTerm; document.getElementById('crmSearch').value = crmSearchTerm; }
+    render();
+    renderCrmBoard();
+    localStorage.setItem(LS_GH_SYNC, JSON.stringify({at: new Date().toISOString()}));
+    setGithubStatus(`sync ok ${new Date().toLocaleTimeString()}`);
+  }catch(err){ showToast('Falha ao aplicar sync.'); }
+}
+function githubSave(){
+  const headers = githubHeaders();
+  if(!headers){ setGithubStatus('login required'); return; }
+  const payload = buildFullPayload();
+  const body = JSON.stringify({message: `sync: ${new Date().toLocaleString()}`, content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))), sha: null});
+  setGithubStatus('salvando...');
+  fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodeURIComponent(GH_PATH)}`, {method:'PUT', headers, body})
+    .then(r=>r.json())
+    .then(data=>{
+      if(data.content){ applyFullPayload(payload); showToast('Salvo no GitHub.'); }
+      else { setGithubStatus('erro save'); console.error(data); }
+    })
+    .catch(()=> setGithubStatus('erro rede'));
+}
+function githubLoad(){
+  const headers = githubHeaders();
+  if(!headers){ setGithubStatus('login required'); return; }
+  setGithubStatus('carregando...');
+  fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodeURIComponent(GH_PATH)}`, {headers})
+    .then(r=> r.ok ? r.json() : Promise.reject())
+    .then(data=>{
+      if(!data.content) return;
+      try{
+        const json = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+        applyFullPayload(json);
+        showToast('Carregado do GitHub.');
+      }catch(err){ showToast('Arquivo remoto inválido.'); }
+    })
+    .catch(()=> setGithubStatus('sem backup'));
+}
+document.getElementById('btnGithubLogin').onclick = ()=>{
+  const client_id = prompt('Cole aqui o GitHub OAuth App client_id (apps.github.com):');
+  if(!client_id) return;
+  const state = Math.random().toString(36).slice(2);
+  localStorage.setItem('crm_gh_oauth_state', state);
+  const url = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(client_id)}&scope=repo&state=${state}`;
+  const w = window.open(url, '_blank', 'width=600,height=700');
+  if(!w){ showToast('Popup bloqueado.'); return; }
+  const poll = setInterval(()=>{
+    try{
+      if(!w || w.closed){ clearInterval(poll); return; }
+      if(w.location.hostname === location.hostname){
+        const qs = new URLSearchParams(w.location.search);
+        if(qs.get('state') === state){
+          clearInterval(poll);
+          const code = qs.get('code');
+          if(code){ exchangeCode(code, client_id); }
+          w.close();
+        }
+      }
+    }catch(e){}
+  }, 800);
+};
+document.getElementById('btnGithubLogout').onclick = ()=>{
+  localStorage.removeItem(LS_GH);
+  localStorage.removeItem(LS_GH_USER);
+  setGithubStatus('desconectado');
+  showToast('Desconectado do GitHub.');
+};
+function exchangeCode(code, client_id){
+  showToast('Trocando code pelo token...');
+  fetch('https://github.com/login/oauth/access_token', {
+    method:'POST',
+    headers:{'Accept':'application/json', 'Content-Type':'application/json'},
+    body: JSON.stringify({client_id, client_secret: undefined, code, redirect_uri: location.origin + location.pathname, state: localStorage.getItem('crm_gh_oauth_state')})
+  })
+  .then(r=>r.json())
+  .then(data=>{
+    const token = data && data.access_token;
+    if(!token){ setGithubStatus('erro token'); return; }
+    localStorage.setItem(LS_GH, token);
+    githubWhoami();
+    showToast('Login OK.');
+  })
+  .catch(()=> setGithubStatus('erro troca'));
+}
+function githubWhoami(){
+  const headers = githubHeaders({'Accept':'application/vnd.github+json'});
+  if(!headers){ setGithubStatus('login required'); return; }
+  fetch('https://api.github.com/user', {headers})
+    .then(r=> r.ok ? r.json() : Promise.reject())
+    .then(data=>{
+      const user = data && data.login;
+      if(user){ localStorage.setItem(LS_GH_USER, user); setGithubStatus(`logado: ${user}`); githubLoad(); }
+      else { setGithubStatus('erro user'); }
+    })
+    .catch(()=> setGithubStatus('erro rede'));
+}
+function githubInit(){
+  const user = localStorage.getItem(LS_GH_USER);
+  const token = localStorage.getItem(LS_GH);
+  if(user && token){ setGithubStatus(`logado: ${user}`); githubLoad(); }
+  else { setGithubStatus('desconectado'); }
+}
+function autoSync(){
+  const token = localStorage.getItem(LS_GH);
+  if(!token) return;
+  const last = localStorage.getItem(LS_GH_SYNC);
+  if(!last){ githubSave(); return; }
+  try{
+    const lastDate = new Date(JSON.parse(last).at);
+    const now = new Date();
+    const diffMins = (now - lastDate)/1000/60;
+    if(diffMins >= 5) githubSave();
+  }catch(e){ githubSave(); }
+}
+
+/* Inicializa e sincroniza */
+githubInit();
+setInterval(autoSync, 60 * 1000);
+
+/* ===== handlers ===== */
+document.getElementById('btnGithubLogin').onclick = ()=>{
+  const client_id = prompt('Cole aqui o GitHub OAuth App client_id (apps.github.com):');
+  if(!client_id) return;
+  const state = Math.random().toString(36).slice(2);
+  localStorage.setItem('crm_gh_oauth_state', state);
+  const redirect = encodeURIComponent(location.origin + location.pathname);
+  const url = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(client_id)}&scope=repo&state=${state}&redirect_uri=${redirect}`;
+  const w = window.open(url, '_blank', 'width=600,height=700');
+  if(!w){ showToast('Popup bloqueado.'); return; }
+  const poll = setInterval(()=>{
+    try{
+      if(!w || w.closed){ clearInterval(poll); return; }
+      if(w.location.hostname === location.hostname){
+        const qs = new URLSearchParams(w.location.search);
+        if(qs.get('state') === state){
+          clearInterval(poll);
+          const code = qs.get('code');
+          if(code){ exchangeCode(code, client_id); }
+          w.close();
+        }
+      }
+    }catch(e){}
+  }, 800);
+};
+document.getElementById('btnGithubLogout').onclick = ()=>{
+  localStorage.removeItem(LS_GH);
+  localStorage.removeItem(LS_GH_USER);
+  setGithubStatus('desconectado');
+  showToast('Desconectado do GitHub.');
+};
+document.getElementById('btnSaveAll').onclick = ()=>{
+  const payload = buildFullPayload();
   const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = `crm_estado_completo_${new Date().toISOString().slice(0,10)}.json`;
   a.click(); URL.revokeObjectURL(url);
   showToast('Estado completo salvo.');
+  if(localStorage.getItem(LS_GH)) githubSave();
 };
 document.getElementById('btnLoadAll').onclick = ()=>document.getElementById('loadFile').click();
-document.getElementById('loadFile').onchange = (e)=>{
-  const file = e.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    try{
-      const data = JSON.parse(reader.result);
-      let restored = 0;
-      const p = data.prospeccao || {};
-      if(p.statusMap){ statusMap = p.statusMap; localStorage.setItem(LS_STATUS, JSON.stringify(statusMap)); restored++; }
-      if(p.selected){ selected = new Set(p.selected); localStorage.setItem(LS_SEL, JSON.stringify([...selected])); restored++; }
-      if(p.activeTier !== undefined) activeTier = p.activeTier;
-      if(p.activeSubtipo !== undefined) activeSubtipo = p.activeSubtipo;
-      if(p.searchTerm !== undefined){ searchTerm = p.searchTerm; document.getElementById('searchInput').value = searchTerm; }
-      if(p.statusFilter !== undefined) statusFilter = p.statusFilter;
-      if(p.prioFilter !== undefined) prioFilter = p.prioFilter;
-      if(p.page !== undefined) page = p.page;
-      const c = data.crm || {};
-      if(c.crmMap){ crmMap = c.crmMap; localStorage.setItem(LS_CRM, JSON.stringify(crmMap)); restored++; }
-      if(c.crmSearchTerm !== undefined){ crmSearchTerm = c.crmSearchTerm; document.getElementById('crmSearch').value = crmSearchTerm; }
-      render();
-      renderCrmBoard();
-      showToast('Estado completo restaurado.');
-    }catch(err){ showToast('Arquivo inválido.'); }
-  };
-  reader.readAsText(file);
-};
 
 /* ===== render geral ===== */
 function render(){
