@@ -1125,7 +1125,7 @@ function crmFollowMessage(c){
 function crmFollowSubject(c){ return `Retomando contato${c.empresa ? ` — ${c.empresa}` : ''}`; }
 
 function crmReuniaoMessage(c){
-  return `${greet(c.nome)}\n\nConfirmando por aqui nossa conversa. Fico à disposição para alinhar o melhor horário e, se for útil, posso enviar antes um resumo rápido dos pontos que quero abordar.\n\nQualquer ajuste de agenda, me avisa por aqui mesmo ou pelo WhatsApp (21) 99971-9474.\n\nAté breve,\nFlávio Guedes`;
+  return `${greet(c.nome)}\n\nConfirmando por aqui nossa conversa. Fico à disposição para alinhar o melhor horário e, se for útil, posso enviar antes um resumo rápido dos pontos que quero abordar.\n\nQualquer ajuste de agenda, me avisa por aqui mesmo ou pelo WhatsApp [contato].\n\nAté breve,\nFlávio Guedes`;
 }
 function crmReuniaoSubject(c){ return `Confirmação da nossa conversa${c.empresa ? ` — ${c.empresa}` : ''}`; }
 
