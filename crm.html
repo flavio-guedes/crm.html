@@ -94,7 +94,6 @@ select.filter{background:var(--panel); border:1px solid var(--border); color:var
 .badge{font-size:9.5px; padding:2px 7px; border-radius:5px; font-weight:700; letter-spacing:.4px; text-transform:uppercase;}
 .badge-tier{background:rgba(79,157,255,.14); color:var(--accent2); border:1px solid rgba(79,157,255,.3);}
 .badge-sub{background:rgba(109,91,255,.14); color:#b3a8ff; border:1px solid rgba(109,91,255,.3);}
-.badge-personalizada{background:rgba(255,196,79,.14); color:#ffd479; border:1px solid rgba(255,196,79,.35);}
 .prio{font-size:13px;}
 .c-side{display:flex; flex-direction:column; align-items:flex-end; gap:6px;}
 select.status-sel{background:var(--panel2); border:1px solid var(--border); color:var(--text); border-radius:7px; padding:6px 8px; font-size:11.5px; font-family:inherit; cursor:pointer;}
@@ -138,56 +137,10 @@ select.status-sel{background:var(--panel2); border:1px solid var(--border); colo
 .global-actions{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px;}
 .hint{font-size:11.5px; color:var(--text-faint); margin-top:-8px; margin-bottom:16px;}
 .section-title{font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-faint); font-weight:700; margin:6px 0 10px;}
-
-/* ===== abas principais ===== */
-.top-tabs{max-width:1320px; margin:0 auto; padding:16px 18px 0; display:flex; gap:8px;}
-.top-tab{background:var(--panel); border:1px solid var(--border); color:var(--text-dim); padding:10px 18px; border-radius:10px 10px 0 0; font-size:13px; font-weight:700; cursor:pointer; border-bottom:none; transition:.15s;}
-.top-tab:hover{color:var(--text);}
-.top-tab.active{background:var(--bg2); color:#fff; border-color:var(--accent); box-shadow:0 -2px 0 var(--accent) inset;}
-.view-pane{display:none;}
-.view-pane.active{display:block;}
-
-/* ===== CRM kanban ===== */
-.crm-wrap{max-width:1320px; margin:0 auto; padding:22px 18px 60px;}
-.crm-head{display:flex; justify-content:space-between; align-items:flex-end; gap:14px; margin-bottom:18px; flex-wrap:wrap;}
-.crm-head .sub{color:var(--text-dim); font-size:13px; max-width:640px;}
-.crm-board{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; align-items:start;}
-@media(max-width:1000px){.crm-board{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:640px){.crm-board{grid-template-columns:1fr;}}
-.crm-col{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:12px; min-height:120px;}
-.crm-col-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; padding-bottom:10px; border-bottom:1px solid var(--border-soft);}
-.crm-col-title{font-size:12.5px; font-weight:800; text-transform:uppercase; letter-spacing:.8px; display:flex; align-items:center; gap:7px;}
-.crm-dot{width:8px; height:8px; border-radius:50%;}
-.crm-col[data-stage="Monitorando"] .crm-dot{background:var(--accent2);}
-.crm-col[data-stage="Enviado"] .crm-dot{background:var(--warn);}
-.crm-col[data-stage="Reunião"] .crm-dot{background:#b3a8ff;}
-.crm-col[data-stage="Ganho"] .crm-dot{background:var(--ok);}
-.crm-col-count{background:var(--panel2); border:1px solid var(--border); color:var(--text-dim); font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px;}
-.crm-card{background:var(--panel2); border:1px solid var(--border); border-radius:10px; padding:11px 12px; margin-bottom:9px;}
-.crm-card:hover{border-color:#3a3f52;}
-.crm-card .n{font-weight:700; font-size:13px;}
-.crm-card .e{font-size:11.5px; color:var(--text-dim); margin-top:2px;}
-.crm-card .em{font-size:11px; color:var(--accent2); margin-top:4px; word-break:break-all;}
-.crm-card .tags{display:flex; gap:5px; margin-top:6px; flex-wrap:wrap;}
-.crm-tag{font-size:9.5px; padding:2px 6px; border-radius:5px; font-weight:700; text-transform:uppercase; letter-spacing:.3px; background:rgba(79,157,255,.14); color:var(--accent2); border:1px solid rgba(79,157,255,.3);}
-.crm-tag.lost{background:rgba(232,84,107,.14); color:var(--danger); border-color:rgba(232,84,107,.35);}
-.crm-card-actions{display:flex; gap:5px; margin-top:9px; flex-wrap:wrap;}
-.crm-mini-btn{background:var(--panel); border:1px solid var(--border); color:var(--text-dim); font-size:10.5px; font-weight:700; padding:5px 8px; border-radius:6px; cursor:pointer; font-family:inherit;}
-.crm-mini-btn:hover{color:var(--text); border-color:#3a3f52;}
-.crm-mini-btn.primary{background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none;}
-.crm-mini-btn:disabled{opacity:.35; cursor:not-allowed;}
-.crm-empty{color:var(--text-faint); font-size:12px; text-align:center; padding:24px 8px;}
-.crm-add-box{display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;}
-.crm-add-box select, .crm-add-box input[type=text]{background:var(--panel); border:1px solid var(--border); color:var(--text); border-radius:8px; padding:9px 11px; font-size:12.5px; font-family:inherit;}
-.crm-add-box input[type=text]{flex:1; min-width:220px;}
 </style>
 </head>
 <body>
-<div class="top-tabs">
-  <button class="top-tab active" id="tabBtnProspeccao">📋 Prospecção</button>
-  <button class="top-tab" id="tabBtnCrm">🧩 CRM · Funil</button>
-</div>
-<div class="wrap view-pane active" id="viewProspeccao">
+<div class="wrap">
   <header class="top">
     <div class="eyebrow">Flávio Guedes · Base de Contatos</div>
     <h1><span class="dot"></span>Prospecção · Command Center</h1>
@@ -202,13 +155,7 @@ select.status-sel{background:var(--panel2); border:1px solid var(--border); colo
     <button class="btn btn-primary" id="btnCopyAll">📋 Copiar todos os e-mails do banco (<span id="totalEmailsCount">0</span>)</button>
     <button class="btn btn-ghost" id="btnExport">⤓ Exportar status (backup)</button>
     <button class="btn btn-ghost" id="btnImport">⤒ Importar status</button>
-    <button class="btn btn-ghost" id="btnSaveAll">💾 Salvar tudo</button>
-    <button class="btn btn-ghost" id="btnLoadAll">📂 Carregar tudo</button>
-    <button class="btn btn-ghost btn-sm" id="btnGithubLogin">🔑 Login GitHub</button>
-    <button class="btn btn-ghost btn-sm" id="btnGithubLogout">Sair</button>
-    <span id="githubStatus" style="font-size:11px;color:var(--text-faint);">desconectado</span>
     <input type="file" id="importFile" accept=".json" style="display:none">
-    <input type="file" id="loadFile" accept=".json" style="display:none">
   </div>
 
   <div class="section-title">Tiers</div>
@@ -250,7 +197,6 @@ select.status-sel{background:var(--panel2); border:1px solid var(--border); colo
   <div class="action-buttons">
     <button class="btn btn-ghost btn-sm" id="btnCopyEmails">Copiar e-mails</button>
     <button class="btn btn-ghost btn-sm" id="btnCopyCCO">Copiar p/ CCO</button>
-    <button class="btn btn-ghost btn-sm" id="btnAddToCrm">🧩 Adicionar ao CRM</button>
     <button class="btn btn-primary" id="btnPrepararDisparo">🚀 Preparar disparo</button>
   </div>
 </div>
@@ -268,7 +214,7 @@ select.status-sel{background:var(--panel2); border:1px solid var(--border); colo
     <div class="field-label">Assunto</div>
     <select id="mSubjectSelect"></select>
     <input type="text" id="mSubject" style="margin-top:8px">
-    <div class="field-label">Mensagem <span id="mMsgTag" style="text-transform:none; font-weight:600; letter-spacing:0;"></span></div>
+    <div class="field-label">Mensagem</div>
     <textarea id="mMessage"></textarea>
     <div class="field-label">Portfólio recomendado</div>
     <div class="portfolio-pick" id="portfolioPick"></div>
@@ -293,59 +239,18 @@ select.status-sel{background:var(--panel2); border:1px solid var(--border); colo
   </div>
 </div>
 
-<div class="crm-wrap view-pane" id="viewCrm">
-  <div class="crm-head">
-    <div>
-      <div class="eyebrow">Flávio Guedes · Funil de relacionamento</div>
-      <h1 style="font-size:22px;"><span class="dot"></span>CRM · 4 etapas</h1>
-      <div class="sub">Monitorando → Enviado → Reunião → Ganho. Adicione contatos pela aba Prospecção (seleção + "Adicionar ao CRM") e mova o card entre as etapas conforme a conversa avança.</div>
-    </div>
-    <button class="btn btn-ghost btn-sm" id="btnClearCrmFilters">Limpar busca</button>
-  </div>
-  <div class="crm-add-box">
-    <input type="text" id="crmSearch" placeholder="Buscar no funil por nome, empresa ou e-mail...">
-  </div>
-  <div class="crm-board" id="crmBoard"></div>
-</div>
-
-<div class="modal-bg" id="crmModalBg">
-  <div class="modal">
-    <button class="close-x" id="crmModalClose">×</button>
-    <h2 id="crmModalTitle">Mensagem</h2>
-    <div class="sub" id="crmModalSub">Etapa</div>
-    <div class="field-label">Assunto</div>
-    <input type="text" id="crmSubject">
-    <div class="field-label">Mensagem</div>
-    <textarea id="crmMessage"></textarea>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" id="crmCopySubject">Copiar assunto</button>
-      <button class="btn btn-ghost" id="crmCopyMessage">Copiar mensagem</button>
-    </div>
-    <button class="btn btn-primary" id="crmSendEmail" style="width:100%; margin-top:8px; padding:12px;">✉️ Enviar e-mail agora</button>
-    <div class="hint" style="margin-top:8px; margin-bottom:0;">Abre seu cliente de e-mail padrão com destinatário, assunto e mensagem preenchidos.</div>
-  </div>
-</div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-const CONTACTS = [
-  {"id": 1, "nome": "Contato Demo 001", "empresa": "Empresa Demonstração", "cargo": "Cargo de Demonstração", "email": "contato001@example.invalid", "tel": "", "linkedin": "", "listaV2": "01 - Vaga_Contratacao", "tierLabel": "01 · Vaga / Contratação", "categoria": "Vaga / Contratação", "subtipo": "Diretoria / Liderança", "prioridade": "Média", "score": "10", "status": "Pendente"},
-  {"id": 2, "nome": "Contato Demo 002", "empresa": "Outra Empresa Demo", "cargo": "Gerente de Produto", "email": "contato002@example.invalid", "tel": "", "linkedin": "", "listaV2": "05 - Gestao_Marketing", "tierLabel": "05 · Gestão de Marketing", "categoria": "Gestão de Marketing", "subtipo": "Marketing / Growth", "prioridade": "Alta", "score": "20", "status": "Selecionado"},
-  {"id": 3, "nome": "Contato Demo 003", "empresa": "Empresa Exemplo", "cargo": "Designer", "email": "contato003@example.invalid", "tel": "", "linkedin": "", "listaV2": "04 - Networking", "tierLabel": "04 · Networking", "categoria": "Networking", "subtipo": "Criação / Design", "prioridade": "Baixa", "score": "5", "status": "Enviado"}
-];
->>>>>>> main
-
+const CONTACTS = [];
 </script>
 <script>
-/* ===== estado ===== */
+/* ===== estado / state server ===== */
 const STATUS_OPTIONS = ["Pendente","Selecionado","Enviado","Retorno OK","Sem resposta","Ganho","Perdido"];
-const LS_STATUS = "prospeccao_status_v1";
-const LS_SEL = "prospeccao_sel_v1";
-let statusMap = {}; // email -> status
-try{ statusMap = JSON.parse(localStorage.getItem(LS_STATUS) || "{}"); }catch(e){ statusMap = {}; }
-let selected = new Set(JSON.parse(localStorage.getItem(LS_SEL) || "[]"));
-let activeTier = null; // listaV2 value
+const STATE_URL = "http://127.0.0.1:8000/state";
+let state = { prospeccao: { statusById: {}, selected: [], activeTier: null, activeSubtipo: null, searchTerm: "", statusFilter: "", prioFilter: "", page: 1 }, crm: { crmMap: {}, crmSearchTerm: "" } };
+let contactsLoaded = false;
+let activeTier = null;
 let activeSubtipo = null;
 let searchTerm = "";
 let statusFilter = "";
@@ -353,18 +258,64 @@ let prioFilter = "";
 let page = 1;
 const PAGE_SIZE = 40;
 
-function getStatus(c){ return statusMap[c.email] || c.status || "Pendente"; }
-function setStatus(email, st){ statusMap[email] = st; localStorage.setItem(LS_STATUS, JSON.stringify(statusMap)); }
-function saveSel(){ localStorage.setItem(LS_SEL, JSON.stringify([...selected])); }
+async function loadState(){
+  try{
+    const res = await fetch(STATE_URL);
+    if(!res.ok) throw new Error('state fetch failed');
+    state = await res.json();
+  }catch(e){
+    state = { prospeccao: { statusById: {}, selected: [], activeTier: null, activeSubtipo: null, searchTerm: "", statusFilter: "", prioFilter: "", page: 1 }, crm: { crmMap: {}, crmSearchTerm: "" } };
+  }
+  applyState();
+  render();
+}
+function applyState(){
+  const p = state.prospeccao || {};
+  activeTier = p.activeTier || null;
+  activeSubtipo = p.activeSubtipo || null;
+  searchTerm = p.searchTerm || "";
+  statusFilter = p.statusFilter || "";
+  prioFilter = p.prioFilter || "";
+  page = p.page || 1;
+  document.getElementById('searchInput').value = searchTerm;
+  document.getElementById('statusFilter').value = statusFilter;
+  document.getElementById('prioFilter').value = prioFilter;
+}
+async function persistState(){
+  const payload = { prospeccao: { activeTier, activeSubtipo, searchTerm, statusFilter, prioFilter, page, statusById: (state.prospeccao||{}).statusById||{}, selected: (state.prospeccao||{}).selected||[] }, crm: state.crm || { crmMap: {}, crmSearchTerm: "" } };
+  try{
+    const res = await fetch(STATE_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    if(res.ok) state = payload;
+  }catch(e){}
+}
+function getStatusById(id){
+  const sid = String(id);
+  const map = (state.prospeccao && state.prospeccao.statusById) || {};
+  return map[sid] || "Pendente";
+}
+function setStatusById(id, st){
+  state.prospeccao = state.prospeccao || {};
+  state.prospeccao.statusById = state.prospeccao.statusById || {};
+  state.prospeccao.statusById[String(id)] = st;
+  persistState();
+}
+function saveSel(){
+  state.prospeccao = state.prospeccao || {};
+  state.prospeccao.selected = [...selected];
+  persistState();
+}
+
+
+function getStatusById(id){ return ((state.prospeccao&&state.prospeccao.statusById)||{})[String(id)] || "Pendente"; }
 function slug(s){ return s.replace(/\s+/g,'-'); }
 
 /* ===== tiers ===== */
 const TIER_ORDER = ["01 - Vaga_Contratacao","02 - Indicacao","03 - Recrutamento","04 - Networking","05 - Gestao_Marketing","06 - Parceria_Projeto","07 - Comercial","08 - Baixa_Relevancia"];
 function tiersPresent(){
-  const set = new Set(CONTACTS.map(c=>c.listaV2));
+  const set = new Set((state.leads||[]).map(c=>c.listaV2));
   return TIER_ORDER.filter(t=>set.has(t));
 }
-function tierLabel(t){ const c = CONTACTS.find(x=>x.listaV2===t); return c ? c.tierLabel : t; }
+function tierLabel(t){ const c = (state.leads||[]).find(x=>x.listaV2===t); return c ? (c.tierLabel || t) : t; }
 
 /* ===== mensagens por tier ===== */
 function firstName(nome){
@@ -397,7 +348,10 @@ const SUBJECT_OPTIONS = {
   "07 - Comercial": ["Possível projeto — [Empresa]","Uma oportunidade comercial","Vale uma conversa rápida?"],
   "08 - Baixa_Relevancia": ["Reativando contato","Só um oi!"],
 };
-function buildMessage(c){ if(c.mensagemPersonalizada) return c.mensagemPersonalizada; const f = MESSAGE_BUILDERS[c.listaV2] || MESSAGE_BUILDERS["08 - Baixa_Relevancia"]; return f(c); }
+function buildMessage(c){
+  if(c.mensagem_personalizada) return c.mensagem_personalizada;
+  const f = MESSAGE_BUILDERS[c.listaV2] || MESSAGE_BUILDERS["08 - Baixa_Relevancia"]; return f(c);
+}
 function subjectOptions(c){
   const opts = (SUBJECT_OPTIONS[c.listaV2] || ["Possível conversa — [Empresa]"]).map(s=>s.replace('[Empresa]', c.empresa || 'você'));
   return opts;
@@ -415,10 +369,10 @@ function recommendPortfolio(c){
 
 /* ===== filtragem ===== */
 function filteredContacts(){
-  return CONTACTS.filter(c=>{
+  return (state.leads||[]).filter(c=>{
     if(activeTier && c.listaV2 !== activeTier) return false;
     if(activeSubtipo && c.subtipo !== activeSubtipo) return false;
-    if(statusFilter && getStatus(c) !== statusFilter) return false;
+    if(statusFilter && getStatusById(c.id) !== statusFilter) return false;
     if(prioFilter && c.prioridade !== prioFilter) return false;
     if(searchTerm){
       const s = searchTerm.toLowerCase();
@@ -449,10 +403,10 @@ function emailsOf(list){ return [...new Set(list.map(c=>c.email))]; }
 
 /* ===== render: stats ===== */
 function computeStats(){
-  const total = CONTACTS.length;
+  const total = (state.leads||[]).length;
   const counts = {Enviado:0,Pendente:0,"Retorno OK":0,Ganho:0,Perdido:0};
-  CONTACTS.forEach(c=>{ const s=getStatus(c); if(counts[s]!==undefined) counts[s]++; else if(s==="Pendente") counts.Pendente++; });
-  let pendente=0; CONTACTS.forEach(c=>{ if(getStatus(c)==="Pendente") pendente++; });
+  (state.leads||[]).forEach(c=>{ const s=getStatusById(c.id); if(counts[s]!==undefined) counts[s]++; else if(s==="Pendente") counts.Pendente++; });
+  let pendente=0; (state.leads||[]).forEach(c=>{ if(getStatusById(c.id)==="Pendente") pendente++; });
   return {total, enviados:counts.Enviado, pendentes:pendente, retorno:counts["Retorno OK"], ganhos:counts.Ganho, perdidos:counts.Perdido};
 }
 function renderStats(){
@@ -477,11 +431,11 @@ function renderInsight(){
   let best = null, bestPend = -1;
   tiers.forEach(t=>{
     if(t==="08 - Baixa_Relevancia") return;
-    const list = CONTACTS.filter(c=>c.listaV2===t && getStatus(c)==="Pendente");
+    const list = (state.leads||[]).filter(c=>c.listaV2===t && getStatusById(c.id)==="Pendente");
     if(list.length > bestPend){ bestPend = list.length; best = t; }
   });
   if(!best){ box.innerHTML = '<div class="txt">Todos os grupos prioritários estão em dia. 🎉</div>'; return; }
-  const list = CONTACTS.filter(c=>c.listaV2===best && getStatus(c)==="Pendente");
+  const list = (state.leads||[]).filter(c=>c.listaV2===best && getStatusById(c.id)==="Pendente");
   const subCounts = {};
   list.forEach(c=>{ subCounts[c.subtipo]=(subCounts[c.subtipo]||0)+1; });
   const topSub = Object.entries(subCounts).sort((a,b)=>b[1]-a[1])[0];
@@ -497,7 +451,7 @@ function renderInsight(){
   document.getElementById('btnPrepGroup').onclick = ()=>{
     activeTier = best; activeSubtipo = topSub ? topSub[0] : null; page=1;
     render();
-    const grp = CONTACTS.filter(c=>c.listaV2===best && (!activeSubtipo || c.subtipo===activeSubtipo));
+    const grp = (state.leads||[]).filter(c=>c.listaV2===best && (!activeSubtipo || c.subtipo===activeSubtipo));
     selected = new Set(emailToIdList(grp)); saveSel();
     openModal();
   };
@@ -508,11 +462,11 @@ function emailToIdList(list){ return list.map(c=>c.id); }
 function renderTierNav(){
   const nav = document.getElementById('tierNav');
   const tiers = tiersPresent();
-  let html = `<button class="tier-card ${!activeTier?'active':''}" data-t=""><div class="name">TODOS</div><div class="count">${CONTACTS.length}</div><div class="meta">contatos com e-mail</div></button>`;
+  let html = `<button class="tier-card ${!activeTier?'active':''}" data-t=""><div class="name">TODOS</div><div class="count">${(state.leads||[]).length}</div><div class="meta">contatos com e-mail</div></button>`;
   tiers.forEach(t=>{
-    const list = CONTACTS.filter(c=>c.listaV2===t);
-    const pend = list.filter(c=>getStatus(c)==="Pendente").length;
-    const env = list.filter(c=>getStatus(c)==="Enviado").length;
+    const list = (state.leads||[]).filter(c=>c.listaV2===t);
+    const pend = list.filter(c=>getStatusById(c.id)==="Pendente").length;
+    const env = list.filter(c=>getStatusById(c.id)==="Enviado").length;
     html += `<button class="tier-card ${activeTier===t?'active':''}" data-t="${t}">
       <div class="name">${tierLabel(t)}</div>
       <div class="count">${list.length}</div>
@@ -529,7 +483,7 @@ function renderTierNav(){
 function renderSubtypes(){
   const title = document.getElementById('subtypeTitle');
   const chips = document.getElementById('subtypeChips');
-  const pool = activeTier ? CONTACTS.filter(c=>c.listaV2===activeTier) : CONTACTS;
+  const pool = activeTier ? (state.leads||[]).filter(c=>c.listaV2===activeTier) : (state.leads||[]);
   const counts = {};
   pool.forEach(c=>{ counts[c.subtipo]=(counts[c.subtipo]||0)+1; });
   const entries = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
@@ -567,8 +521,8 @@ function renderList(){
     container.innerHTML = '<div class="empty-state">Nenhum contato encontrado com esses filtros.</div>';
   } else {
     container.innerHTML = pageItems.map(c=>{
-      const st = getStatus(c);
-      const isSel = selected.has(c.id);
+      const st = getStatusById(c.id);
+      const isSel = selected.has(String(c.id));
       return `<div class="contact ${isSel?'sel':''}" data-id="${c.id}">
         <input type="checkbox" class="c-check" data-id="${c.id}" ${isSel?'checked':''}>
         <div class="c-main">
@@ -577,7 +531,6 @@ function renderList(){
             <span class="prio" title="Prioridade: ${c.prioridade}">${PRIO_EMOJI[c.prioridade]||''}</span>
             <span class="badge badge-tier">${esc(c.tierLabel)}</span>
             <span class="badge badge-sub">${esc(c.subtipo)}</span>
-            ${c.mensagemPersonalizada ? '<span class="badge badge-personalizada" title="Mensagem personalizada já preparada para este contato">✨ Personalizada</span>' : ''}
           </div>
           <div class="c-empresa">${esc(c.empresa || '—')} ${c.cargo ? ' · '+esc(c.cargo) : ''}</div>
           <div class="c-email">${esc(c.email)}</div>
@@ -592,7 +545,7 @@ function renderList(){
   }
   container.querySelectorAll('.c-check').forEach(cb=>{
     cb.onchange = ()=>{
-      const id = Number(cb.dataset.id);
+      const id = String(cb.dataset.id);
       if(cb.checked) selected.add(id); else selected.delete(id);
       saveSel(); renderStats(); renderActionBar();
       cb.closest('.contact').classList.toggle('sel', cb.checked);
@@ -600,9 +553,9 @@ function renderList(){
   });
   container.querySelectorAll('.status-sel').forEach(sel=>{
     sel.onchange = ()=>{
-      const id = Number(sel.dataset.id);
-      const c = CONTACTS.find(x=>x.id===id);
-      setStatus(c.email, sel.value);
+      const id = String(sel.dataset.id);
+      const c = (state.leads||[]).find(x=>String(x.id)===String(id));
+      setStatusById(c.id, sel.value);
       renderStats(); renderTierNav(); renderInsight();
       sel.closest('.contact').classList.toggle('sel', selected.has(id));
     };
@@ -631,28 +584,28 @@ function renderActionBar(){
   document.getElementById('btnCopyCCO').disabled = !hasSel;
   document.getElementById('btnPrepararDisparo').disabled = !hasSel;
 }
-function selectedContacts(){ return CONTACTS.filter(c=>selected.has(c.id)); }
+function selectedContacts(){ return (state.leads||[]).filter(c=>selected.has(String(c.id))); }
 
 /* ===== bulk selection ===== */
 document.getElementById('selPage').onclick = ()=>{
   const all = filteredContacts();
   const start=(page-1)*PAGE_SIZE;
-  all.slice(start,start+PAGE_SIZE).forEach(c=>selected.add(c.id));
+  all.slice(start,start+PAGE_SIZE).forEach(c=>selected.add(String(c.id)));
   saveSel(); render();
 };
 document.getElementById('selSubtype').onclick = ()=>{
-  const pool = activeTier ? CONTACTS.filter(c=>c.listaV2===activeTier) : CONTACTS;
+  const pool = activeTier ? (state.leads||[]).filter(c=>c.listaV2===activeTier) : (state.leads||[]);
   const list = activeSubtipo ? pool.filter(c=>c.subtipo===activeSubtipo) : pool;
-  list.forEach(c=>selected.add(c.id));
+  list.forEach(c=>selected.add(String(c.id)));
   saveSel(); render();
 };
 document.getElementById('selTier').onclick = ()=>{
-  const list = activeTier ? CONTACTS.filter(c=>c.listaV2===activeTier) : CONTACTS;
-  list.forEach(c=>selected.add(c.id));
+  const list = activeTier ? (state.leads||[]).filter(c=>c.listaV2===activeTier) : (state.leads||[]);
+  list.forEach(c=>selected.add(String(c.id)));
   saveSel(); render();
 };
 document.getElementById('selFiltered').onclick = ()=>{
-  filteredContacts().forEach(c=>selected.add(c.id));
+  filteredContacts().forEach(c=>selected.add(String(c.id)));
   saveSel(); render();
 };
 document.getElementById('clearSel').onclick = ()=>{ selected.clear(); saveSel(); render(); };
@@ -667,7 +620,7 @@ document.getElementById('btnCopyCCO').onclick = ()=>{
   copyText(emails.join('; '), `${emails.length} e-mail(s) prontos para colar no CCO.`);
 };
 document.getElementById('btnCopyAll').onclick = ()=>{
-  const emails = emailsOf(CONTACTS);
+  const emails = emailsOf(state.leads||[]);
   copyText(emails.join('; '), `${emails.length} e-mails válidos do banco copiados.`);
 };
 
@@ -678,7 +631,7 @@ let batches = [];             // array de lotes (arrays de contatos)
 let batchIndex = 0;
 
 function chunkArray(arr, size){ const out=[]; for(let i=0;i<arr.length;i+=size) out.push(arr.slice(i,i+size)); return out; }
-function batchIsSent(list){ return list.length>0 && list.every(c=>getStatus(c)==="Enviado"); }
+function batchIsSent(list){ return list.length>0 && list.every(c=>getStatusById(c.id)==="Enviado"); }
 
 function populateModalForContacts(list){
   modalContacts = list;
@@ -693,7 +646,7 @@ function populateModalForContacts(list){
   const domTier = Object.entries(tierCounts).sort((a,b)=>b[1]-a[1])[0][0];
   const domContact = list.find(c=>c.listaV2===domTier) || list[0];
   const batchTag = batches.length>1 ? ` · Lote ${batchIndex+1}/${batches.length}` : '';
-  document.getElementById('modalSub').textContent = `${tierLabel(domTier)} · ${list.length} contato(s)${batchTag}`;
+  document.getElementById('modalSub').textContent = `${tierLabel(domTier)} · ${domContact.nome} · ${list.length} contato(s)${batchTag}`;
 
   const subjSel = document.getElementById('mSubjectSelect');
   const opts = subjectOptions(domContact);
@@ -702,9 +655,6 @@ function populateModalForContacts(list){
   subjSel.onchange = ()=>{ document.getElementById('mSubject').value = subjSel.value; };
 
   document.getElementById('mMessage').value = buildMessage(domContact);
-  const mTag = document.getElementById('mMsgTag');
-  mTag.textContent = domContact.mensagemPersonalizada ? '· ✨ abordagem personalizada' : '';
-  mTag.style.color = '#ffd479';
 
   const rec = recommendPortfolio(domContact);
   const pick = document.getElementById('portfolioPick');
@@ -796,7 +746,7 @@ function buildMailto(){
   return {url, len:url.length, count:emails.length, emails, subj, msg};
 }
 function markCurrentBatchSent(){
-  modalContacts.forEach(c=>setStatus(c.email, 'Enviado'));
+  modalContacts.forEach(c=>setStatusById(c.id, 'Enviado'));
   renderStats(); renderTierNav(); renderInsight(); renderList();
   renderBatchNav();
 }
@@ -834,7 +784,7 @@ document.getElementById('btnClearFilters').onclick = ()=>{
 
 /* ===== export / import backup ===== */
 document.getElementById('btnExport').onclick = ()=>{
-  const data = {status:statusMap, exportedAt:new Date().toISOString()};
+  const data = {status: (state.prospeccao&&state.prospeccao.statusById)||{}, exportedAt:new Date().toISOString()};
   const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -849,246 +799,11 @@ document.getElementById('importFile').onchange = (e)=>{
   reader.onload = ()=>{
     try{
       const data = JSON.parse(reader.result);
-      if(data.status){ statusMap = data.status; localStorage.setItem(LS_STATUS, JSON.stringify(statusMap)); render(); showToast('Status importado com sucesso.'); }
+      if(data.status){ state.prospeccao = state.prospeccao||{}; state.prospeccao.statusById = data.status; persistState(); render(); showToast('Status importado com sucesso.'); }
     }catch(err){ showToast('Arquivo inválido.'); }
   };
   reader.readAsText(file);
 };
-
-/* ===== salvar / carregar estado completo ===== */
-const LS_ALL = "crm_full_state_v1";
-function saveFullState(){
-  const payload = buildFullPayload();
-  localStorage.setItem(LS_ALL, JSON.stringify(payload));
-}
-function loadFullState(){
-  const raw = localStorage.getItem(LS_ALL);
-  if(!raw) return;
-  try{
-    const data = JSON.parse(raw);
-    applyFullPayload(data);
-    showToast('Estado local restaurado.');
-  }catch(err){ showToast('Backup local inválido.'); }
-}
-document.getElementById('btnSaveAll').onclick = ()=>{
-  const payload = buildFullPayload();
-  localStorage.setItem(LS_ALL, JSON.stringify(payload));
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `crm_estado_completo_${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url);
-  showToast('Estado completo salvo.');
-  if(localStorage.getItem(LS_GH)) githubSave();
-};
-document.getElementById('btnLoadAll').onclick = ()=>document.getElementById('loadFile').click();
-document.getElementById('loadFile').onchange = (e)=>{
-  const file = e.target.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    try{
-      const data = JSON.parse(reader.result);
-      applyFullPayload(data);
-      localStorage.setItem(LS_ALL, JSON.stringify(data));
-      showToast('Estado completo restaurado.');
-    }catch(err){ showToast('Arquivo inválido.'); }
-  };
-  reader.readAsText(file);
-};
-
-/* ===== GitHub sync ===== */
-const GH_REPO = "flavio-guedes/crm.html";
-const GH_PATH = "crm_estado.json";
-const LS_GH = "crm_github_token_v1";
-const LS_GH_USER = "crm_github_user_v1";
-const LS_GH_SYNC = "crm_last_sync_v1";
-
-function githubHeaders(extra){
-  const token = localStorage.getItem(LS_GH);
-  if(!token) return null;
-  const base = {
-    'Authorization': `Bearer ${token}`,
-    'Accept': 'application/vnd.github+json',
-    'X-GitHub-Api-Version': '2022-11-28',
-    'Content-Type': 'application/json'
-  };
-  return {...base, ...extra};
-}
-function setGithubStatus(text){ document.getElementById('githubStatus').textContent = text; }
-function buildFullPayload(){
-  return {
-    exportedAt: new Date().toISOString(),
-    prospeccao: {
-      statusMap,
-      selected: [...selected],
-      activeTier,
-      activeSubtipo,
-      searchTerm,
-      statusFilter,
-      prioFilter,
-      page
-    },
-    crm: {
-      crmMap,
-      crmSearchTerm
-    }
-  };
-}
-function applyFullPayload(data){
-  try{
-    const p = data.prospeccao || {};
-    if(p.statusMap){ statusMap = p.statusMap; localStorage.setItem(LS_STATUS, JSON.stringify(statusMap)); }
-    if(p.selected){ selected = new Set(p.selected); localStorage.setItem(LS_SEL, JSON.stringify([...selected])); }
-    if(p.activeTier !== undefined) activeTier = p.activeTier;
-    if(p.activeSubtipo !== undefined) activeSubtipo = p.activeSubtipo;
-    if(p.searchTerm !== undefined){ searchTerm = p.searchTerm; document.getElementById('searchInput').value = searchTerm; }
-    if(p.statusFilter !== undefined) statusFilter = p.statusFilter;
-    if(p.prioFilter !== undefined) prioFilter = p.prioFilter;
-    if(p.page !== undefined) page = p.page;
-    const c = data.crm || {};
-    if(c.crmMap){ crmMap = c.crmMap; localStorage.setItem(LS_CRM, JSON.stringify(crmMap)); }
-    if(c.crmSearchTerm !== undefined){ crmSearchTerm = c.crmSearchTerm; document.getElementById('crmSearch').value = crmSearchTerm; }
-    render();
-    renderCrmBoard();
-    localStorage.setItem(LS_GH_SYNC, JSON.stringify({at: new Date().toISOString()}));
-    setGithubStatus(`sync ok ${new Date().toLocaleTimeString()}`);
-  }catch(err){ showToast('Falha ao aplicar sync.'); }
-}
-function githubSave(){
-  const headers = githubHeaders();
-  if(!headers){ setGithubStatus('login required'); return; }
-  const payload = buildFullPayload();
-  const body = JSON.stringify({message: `sync: ${new Date().toLocaleString()}`, content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))), sha: null});
-  setGithubStatus('salvando...');
-  fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodeURIComponent(GH_PATH)}`, {method:'PUT', headers, body})
-    .then(r=>r.json())
-    .then(data=>{
-      if(data.content){ applyFullPayload(payload); showToast('Salvo no GitHub.'); }
-      else { setGithubStatus('erro save'); console.error(data); }
-    })
-    .catch(()=> setGithubStatus('erro rede'));
-}
-function githubLoad(){
-  const headers = githubHeaders();
-  if(!headers){ setGithubStatus('login required'); return; }
-  setGithubStatus('carregando...');
-  fetch(`https://api.github.com/repos/${GH_REPO}/contents/${encodeURIComponent(GH_PATH)}`, {headers})
-    .then(r=> r.ok ? r.json() : Promise.reject())
-    .then(data=>{
-      if(!data.content) return;
-      try{
-        const json = JSON.parse(decodeURIComponent(escape(atob(data.content))));
-        applyFullPayload(json);
-        showToast('Carregado do GitHub.');
-      }catch(err){ showToast('Arquivo remoto inválido.'); }
-    })
-    .catch(()=> setGithubStatus('sem backup'));
-}
-document.getElementById('btnGithubLogin').onclick = ()=>{
-  const client_id = prompt('Cole aqui o GitHub OAuth App client_id (apps.github.com):');
-  if(!client_id) return;
-  const state = Math.random().toString(36).slice(2);
-  localStorage.setItem('crm_gh_oauth_state', state);
-  const url = `https://github.com/login/oauth/authorize?client_id=${encodeURIComponent(client_id)}&scope=repo&state=${state}`;
-  const w = window.open(url, '_blank', 'width=600,height=700');
-  if(!w){ showToast('Popup bloqueado.'); return; }
-  const poll = setInterval(()=>{
-    try{
-      if(!w || w.closed){ clearInterval(poll); return; }
-      if(w.location.hostname === location.hostname){
-        const qs = new URLSearchParams(w.location.search);
-        if(qs.get('state') === state){
-          clearInterval(poll);
-          const code = qs.get('code');
-          if(code){ exchangeCode(code, client_id); }
-          w.close();
-        }
-      }
-    }catch(e){}
-  }, 800);
-};
-document.getElementById('btnGithubLogout').onclick = ()=>{
-  localStorage.removeItem(LS_GH);
-  localStorage.removeItem(LS_GH_USER);
-  setGithubStatus('desconectado');
-  showToast('Desconectado do GitHub.');
-};
-function exchangeCode(code, client_id){
-  showToast('Trocando code pelo token...');
-  fetch('https://github.com/login/oauth/access_token', {
-    method:'POST',
-    headers:{'Accept':'application/json', 'Content-Type':'application/json'},
-    body: JSON.stringify({client_id, client_secret: undefined, code, redirect_uri: location.origin + location.pathname, state: localStorage.getItem('crm_gh_oauth_state')})
-  })
-  .then(r=>r.json())
-  .then(data=>{
-    const token = data && data.access_token;
-    if(!token){ setGithubStatus('erro token'); return; }
-    localStorage.setItem(LS_GH, token);
-    githubWhoami();
-    showToast('Login OK.');
-  })
-  .catch(()=> setGithubStatus('erro troca'));
-}
-function githubWhoami(){
-  const headers = githubHeaders({'Accept':'application/vnd.github+json'});
-  if(!headers){ setGithubStatus('login required'); return; }
-  fetch('https://api.github.com/user', {headers})
-    .then(r=> r.ok ? r.json() : Promise.reject())
-    .then(data=>{
-      const user = data && data.login;
-      if(user){ localStorage.setItem(LS_GH_USER, user); setGithubStatus(`logado: ${user}`); githubLoad(); }
-      else { setGithubStatus('erro user'); }
-    })
-    .catch(()=> setGithubStatus('erro rede'));
-}
-function githubInit(){
-  const user = localStorage.getItem(LS_GH_USER);
-  const token = localStorage.getItem(LS_GH);
-  if(user && token){ setGithubStatus(`logado: ${user}`); githubLoad(); }
-  else { setGithubStatus('desconectado'); }
-}
-function autoSync(){
-  const token = localStorage.getItem(LS_GH);
-  if(!token) return;
-  const last = localStorage.getItem(LS_GH_SYNC);
-  if(!last){ githubSave(); return; }
-  try{
-    const lastDate = new Date(JSON.parse(last).at);
-    const now = new Date();
-    const diffMins = (now - lastDate)/1000/60;
-    if(diffMins >= 5) githubSave();
-  }catch(e){ githubSave(); }
-}
-
-/* Inicializa e sincroniza */
-githubInit();
-setInterval(autoSync, 60 * 1000);
-
-/* ===== handlers ===== */
-document.getElementById('btnGithubLogin').onclick = ()=>{
-  const token = prompt('Cole aqui o seu GitHub Personal Access Token (escopo repo):');
-  if(!token) return;
-  localStorage.setItem(LS_GH, token.trim());
-  githubWhoami();
-};
-document.getElementById('btnGithubLogout').onclick = ()=>{
-  localStorage.removeItem(LS_GH);
-  localStorage.removeItem(LS_GH_USER);
-  setGithubStatus('desconectado');
-  showToast('Desconectado do GitHub.');
-};
-document.getElementById('btnSaveAll').onclick = ()=>{
-  const payload = buildFullPayload();
-  const blob = new Blob([JSON.stringify(payload, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `crm_estado_completo_${new Date().toISOString().slice(0,10)}.json`;
-  a.click(); URL.revokeObjectURL(url);
-  showToast('Estado completo salvo.');
-  if(localStorage.getItem(LS_GH)) githubSave();
-};
-document.getElementById('btnLoadAll').onclick = ()=>document.getElementById('loadFile').click();
 
 /* ===== render geral ===== */
 function render(){
@@ -1101,189 +816,6 @@ function render(){
   renderActionBar();
 }
 render();
-
-/* =====================================================================
-   CRM · Funil em 4 etapas (Monitorando / Enviado / Reunião / Ganho)
-   ===================================================================== */
-const CRM_STAGES = ["Monitorando","Enviado","Reunião","Ganho"];
-const LS_CRM = "crm_stage_v1";
-let crmMap = {}; // email -> {stage, lost:bool}
-try{ crmMap = JSON.parse(localStorage.getItem(LS_CRM) || "{}"); }catch(e){ crmMap = {}; }
-function saveCrm(){ localStorage.setItem(LS_CRM, JSON.stringify(crmMap)); }
-function contactByEmail(email){ return CONTACTS.find(c=>c.email===email); }
-function crmEntries(){ return Object.keys(crmMap).map(email=>({email, ...crmMap[email]})).filter(e=>contactByEmail(e.email)); }
-
-let crmSearchTerm = "";
-
-/* ---- mensagens por etapa ---- */
-function crmMonitorandoMessage(c){ return buildMessage(c); }
-function crmMonitorandoSubject(c){ return subjectOptions(c)[0] || `Possível conversa — ${c.empresa || 'você'}`; }
-
-function crmFollowMessage(c){
-  return `${greet(c.nome)}\n\nPassando para retomar o contato — te escrevi há alguns dias sobre uma possível conversa${c.empresa ? ` envolvendo a ${c.empresa}` : ''} e não sei se chegou a ver a mensagem.\n\nSe ainda fizer sentido, fico à disposição para um bate-papo rápido essa semana ou a próxima.\n\nAbraço,\nFlávio Guedes`;
-}
-function crmFollowSubject(c){ return `Retomando contato${c.empresa ? ` — ${c.empresa}` : ''}`; }
-
-function crmReuniaoMessage(c){
-  return `${greet(c.nome)}\n\nConfirmando por aqui nossa conversa. Fico à disposição para alinhar o melhor horário e, se for útil, posso enviar antes um resumo rápido dos pontos que quero abordar.\n\nQualquer ajuste de agenda, me avisa por aqui mesmo ou pelo WhatsApp [contato].\n\nAté breve,\nFlávio Guedes`;
-}
-function crmReuniaoSubject(c){ return `Confirmação da nossa conversa${c.empresa ? ` — ${c.empresa}` : ''}`; }
-
-function crmGanhoMessage(c){
-  return `${greet(c.nome)}\n\nQue ótima notícia seguirmos juntos! Vou preparar os próximos passos e já te encaminho um plano inicial para alinharmos prazos e responsabilidades.\n\nQualquer dúvida antes disso, é só chamar.\n\nAbraço e vamos em frente,\nFlávio Guedes`;
-}
-function crmGanhoSubject(c){ return `Vamos começar${c.empresa ? ` — ${c.empresa}` : ''}!`; }
-
-function crmMessageFor(stage, c){
-  if(stage==="Enviado") return crmFollowMessage(c);
-  if(stage==="Reunião") return crmReuniaoMessage(c);
-  if(stage==="Ganho") return crmGanhoMessage(c);
-  return crmMonitorandoMessage(c);
-}
-function crmSubjectFor(stage, c){
-  if(stage==="Enviado") return crmFollowSubject(c);
-  if(stage==="Reunião") return crmReuniaoSubject(c);
-  if(stage==="Ganho") return crmGanhoSubject(c);
-  return crmMonitorandoSubject(c);
-}
-function crmStageLabel(stage){
-  const map = {Monitorando:"📡 Monitorando", Enviado:"✉️ Enviado", "Reunião":"🤝 Reunião", Ganho:"🏆 Ganho"};
-  return map[stage] || stage;
-}
-
-/* ---- adicionar contatos ao CRM (a partir da seleção na aba Prospecção) ---- */
-document.getElementById('btnAddToCrm').onclick = ()=>{
-  const list = selectedContacts();
-  if(list.length===0){ showToast('Selecione ao menos um contato.'); return; }
-  let added = 0;
-  list.forEach(c=>{
-    if(!crmMap[c.email]){ crmMap[c.email] = {stage:"Monitorando"}; added++; }
-  });
-  saveCrm();
-  showToast(`${added} contato(s) adicionado(s) ao CRM. ${list.length-added} já estavam no funil.`);
-  switchTab('crm');
-  renderCrmBoard();
-};
-
-/* ---- mover / remover ---- */
-function crmMoveStage(email, dir){
-  const entry = crmMap[email]; if(!entry) return;
-  const idx = CRM_STAGES.indexOf(entry.stage);
-  const next = idx + dir;
-  if(next < 0 || next >= CRM_STAGES.length) return;
-  entry.stage = CRM_STAGES[next];
-  saveCrm();
-  renderCrmBoard();
-  showToast(`Movido para ${crmStageLabel(entry.stage)}.`);
-}
-function crmRemove(email){
-  delete crmMap[email];
-  saveCrm();
-  renderCrmBoard();
-  showToast('Removido do CRM.');
-}
-
-/* ---- modal de mensagem do CRM ---- */
-let crmModalCtx = null; // {email, stage}
-function crmOpenModal(email, stage){
-  const c = contactByEmail(email); if(!c) return;
-  crmModalCtx = {email, stage};
-  document.getElementById('crmModalTitle').textContent = `Mensagem · ${c.nome}`;
-  document.getElementById('crmModalSub').textContent = `${crmStageLabel(stage)} · ${c.empresa || 'sem empresa'}`;
-  document.getElementById('crmSubject').value = crmSubjectFor(stage, c);
-  document.getElementById('crmMessage').value = crmMessageFor(stage, c);
-  document.getElementById('crmModalBg').classList.add('open');
-}
-document.getElementById('crmModalClose').onclick = ()=>document.getElementById('crmModalBg').classList.remove('open');
-document.getElementById('crmModalBg').onclick = (e)=>{ if(e.target.id==='crmModalBg') document.getElementById('crmModalBg').classList.remove('open'); };
-document.getElementById('crmCopySubject').onclick = ()=>copyText(document.getElementById('crmSubject').value, 'Assunto copiado.');
-document.getElementById('crmCopyMessage').onclick = ()=>copyText(document.getElementById('crmMessage').value, 'Mensagem copiada.');
-document.getElementById('crmSendEmail').onclick = ()=>{
-  if(!crmModalCtx) return;
-  const subj = document.getElementById('crmSubject').value;
-  const msg = document.getElementById('crmMessage').value;
-  const url = `mailto:${encodeURIComponent(crmModalCtx.email)}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(msg)}`;
-  showToast('Abrindo seu cliente de e-mail...');
-  window.location.href = url;
-  if(crmModalCtx.stage==="Monitorando"){
-    crmMap[crmModalCtx.email].stage = "Enviado";
-    saveCrm();
-    renderCrmBoard();
-  }
-};
-
-/* ---- render do quadro ---- */
-function renderCrmCard(entry){
-  const c = contactByEmail(entry.email);
-  const idx = CRM_STAGES.indexOf(entry.stage);
-  return `
-    <div class="crm-card">
-      <div class="n">${c.nome}</div>
-      <div class="e">${c.cargo || ''}${c.empresa ? ` · ${c.empresa}` : ''}</div>
-      <div class="em">${c.email}</div>
-      <div class="tags">
-        <span class="crm-tag">${c.tierLabel || c.listaV2 || ''}</span>
-        ${c.prioridade ? `<span class="crm-tag">${c.prioridade==='Alta'?'🔥':'🟡'} ${c.prioridade}</span>` : ''}
-      </div>
-      <div class="crm-card-actions">
-        <button class="crm-mini-btn" data-act="prev" data-email="${c.email}" ${idx<=0?'disabled':''}>◀</button>
-        <button class="crm-mini-btn" data-act="next" data-email="${c.email}" ${idx>=CRM_STAGES.length-1?'disabled':''}>▶</button>
-        <button class="crm-mini-btn primary" data-act="msg" data-email="${c.email}" data-stage="${entry.stage}">✉ Mensagem</button>
-        <button class="crm-mini-btn" data-act="remove" data-email="${c.email}">✕</button>
-      </div>
-    </div>`;
-}
-function filteredCrmEntries(){
-  return crmEntries().filter(e=>{
-    const c = contactByEmail(e.email); if(!c) return false;
-    if(crmSearchTerm){
-      const s = crmSearchTerm.toLowerCase();
-      const hay = `${c.nome} ${c.empresa} ${c.email}`.toLowerCase();
-      if(!hay.includes(s)) return false;
-    }
-    return true;
-  });
-}
-function renderCrmBoard(){
-  const board = document.getElementById('crmBoard');
-  const entries = filteredCrmEntries();
-  board.innerHTML = CRM_STAGES.map(stage=>{
-    const list = entries.filter(e=>e.stage===stage);
-    return `
-      <div class="crm-col" data-stage="${stage}">
-        <div class="crm-col-head">
-          <div class="crm-col-title"><span class="crm-dot"></span>${crmStageLabel(stage)}</div>
-          <div class="crm-col-count">${list.length}</div>
-        </div>
-        ${list.length ? list.map(renderCrmCard).join('') : '<div class="crm-empty">Nenhum contato aqui.</div>'}
-      </div>`;
-  }).join('');
-  board.querySelectorAll('[data-act]').forEach(btn=>{
-    btn.onclick = ()=>{
-      const email = btn.dataset.email, act = btn.dataset.act;
-      if(act==='prev') crmMoveStage(email, -1);
-      else if(act==='next') crmMoveStage(email, 1);
-      else if(act==='remove') crmRemove(email);
-      else if(act==='msg') crmOpenModal(email, btn.dataset.stage);
-    };
-  });
-}
-document.getElementById('crmSearch').oninput = (e)=>{ crmSearchTerm = e.target.value; renderCrmBoard(); };
-document.getElementById('btnClearCrmFilters').onclick = ()=>{ crmSearchTerm=''; document.getElementById('crmSearch').value=''; renderCrmBoard(); };
-
-/* ---- alternar abas ---- */
-function switchTab(tab){
-  const isCrm = tab==='crm';
-  document.getElementById('viewProspeccao').classList.toggle('active', !isCrm);
-  document.getElementById('viewCrm').classList.toggle('active', isCrm);
-  document.getElementById('tabBtnProspeccao').classList.toggle('active', !isCrm);
-  document.getElementById('tabBtnCrm').classList.toggle('active', isCrm);
-  if(isCrm) renderCrmBoard();
-}
-document.getElementById('tabBtnProspeccao').onclick = ()=>switchTab('prospeccao');
-document.getElementById('tabBtnCrm').onclick = ()=>switchTab('crm');
-
-renderCrmBoard();
 
 </script>
 </body>
